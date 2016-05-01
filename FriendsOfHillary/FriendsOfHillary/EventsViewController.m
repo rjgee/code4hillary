@@ -22,6 +22,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+  self.title = @"My Events";
+  
+  UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
+                                initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                target:self action:@selector(addButtonPressed)];
+  self.navigationItem.rightBarButtonItem = addButton;
+}
+
+- (void)addButtonPressed {
   
 }
 

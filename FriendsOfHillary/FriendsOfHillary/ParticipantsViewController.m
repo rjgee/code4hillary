@@ -27,7 +27,7 @@
                                 target:self action:@selector(addButtonPressed)];
   self.navigationItem.rightBarButtonItem = addButton;
     // Do any additional setup after loading the view.
-  self.title = @"Participants";
+  self.title = @"Guests";
 }
 
 - (void)viewDidAppear:(BOOL)animated {

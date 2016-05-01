@@ -14,7 +14,6 @@
 @property (nonatomic, weak) IBOutlet UITextField *firstNameField;
 @property (nonatomic, weak) IBOutlet UITextField *lastNameField;
 @property (nonatomic, weak) IBOutlet UITextField *emailField;
-@property (nonatomic, weak) IBOutlet UITextField *phoneField;
 
 @end
 
@@ -23,6 +22,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+  self.title = @"Add Guest";
+  
+  UIBarButtonItem *button = [[UIBarButtonItem alloc]
+                                 initWithTitle:@"Recruit"
+                                 style:UIBarButtonItemStylePlain
+                                 target:self
+                                 action:@selector(recruit)];
+  self.navigationItem.rightBarButtonItem = button;
+}
+
+- (void)recruit {
+  [self performSegueWithIdentifier:@"participantsToRecruit" sender:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,7 +42,7 @@
 }
 
 - (IBAction)addParticipant:(id)sender {
-  [APIController sendRequest:[NSString stringWithFormat:@"https://api.thegroundwork.com/events/events/%@/invitations", [self.event objectForKey:@"id"]] withMethod:@"POST" andData:@[@{@"email":self.emailField.text, @"phone":self.phoneField.text, @"firstName":self.firstNameField.text, @"lastName":self.lastNameField.text}] timeout:10.0 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+  [APIController sendRequest:[NSString stringWithFormat:@"https://api.thegroundwork.com/events/events/%@/invitations", [self.event objectForKey:@"id"]] withMethod:@"POST" andData:@[@{@"email":self.emailField.text, @"givenName":self.firstNameField.text, @"familyName":self.lastNameField.text}] timeout:10.0 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     dispatch_async(dispatch_get_main_queue(), ^{
       if (error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -48,7 +59,6 @@
   }];
 }
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -56,6 +66,5 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
 
 @end
